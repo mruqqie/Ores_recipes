@@ -29,13 +29,11 @@ const SearchFeed = () => {
 		try {
 			const response = await fetch(
 				`https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&query=${term}&number=100`
-				// `https://api.spoonacular.com/ripes/complexSearch?apiKey=${apiKey}&query=${searchTerm}&number=100`
 			);
 			if (response.ok) {
 				const data = await response.json();
 				setLoading(false);
 				setSearchResult(data);
-				console.log(data);
 			} else {
 				setLoading(false);
 				setError(true);
@@ -66,13 +64,6 @@ const SearchFeed = () => {
 		}, 3000);
 		return () => clearTimeout(timer);
 	}, [searchTerm]);
-
-	// useEffect(() => {
-	// 	if (searchTerm) {
-	// 		setLoading(true);
-	// 		getSearchFeed(searchTerm);
-	// 	}
-	// }, [searchTerm]);
 
 	if (loading) {
 		return <FoodLottie />;

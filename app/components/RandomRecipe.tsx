@@ -80,7 +80,6 @@ const RandomRecipe = () => {
 		try {
 			const response = await fetch(
 				`https://api.spoonacular.com/recipes/random?apiKey=${apiKey}`
-				// `https://api.sacular.com/recipes/random?apiKey=`
 			);
 			if (response.ok) {
 				const data = await response.json();
@@ -108,7 +107,6 @@ const RandomRecipe = () => {
 		try {
 			const response = await fetch(
 				`https://v6.exchangerate-api.com/v6/${apiKey}/pair/USD/NGN/${valueInDollars}`
-				// `https://v6.exgerate-api.com/v6/${apiKey}/pair/USD/NGN/${value}`
 			);
 			if (response.ok) {
 				const data = await response.json();

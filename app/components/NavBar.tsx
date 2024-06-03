@@ -114,8 +114,6 @@ const NavBar = () => {
 						onClick={handleClick}
 						variant="contained"
 						sx={{
-							// marginBottom: 2,
-							// marginTop: 1,
 							borderRadius: "13px",
 							fontSize: { xs: "10px", sm: "16px" },
 						}}
