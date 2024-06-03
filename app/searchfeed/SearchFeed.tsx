@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Suspense } from "react";
 import {
 	Box,
 	Card,
@@ -9,13 +9,12 @@ import {
 	Grid,
 	Typography,
 } from "@mui/material";
-import NavBar from "../components/NavBar";
 import { useSearchParams, useRouter } from "next/navigation";
 import { SearchResult } from "../constants";
-import { get } from "http";
 import FoodLottie from "../components/FoodLottie";
+import NavBar from "../components/NavBar";
 
-const SearchFeed = () => {
+const SearchFeedContent = () => {
 	const searchParams = useSearchParams();
 	const router = useRouter();
 	const query = searchParams.get("query");
@@ -24,7 +23,7 @@ const SearchFeed = () => {
 	const [error, setError] = useState<boolean>(false);
 	const [searchResult, setSearchResult] = useState<SearchResult | null>(null);
 
-	const getSearchFeed = async (term:string) => {
+	const getSearchFeed = async (term: string) => {
 		const apiKey = process.env.NEXT_PUBLIC_SPOONACULAR_API_KEY;
 		try {
 			const response = await fetch(
@@ -45,10 +44,12 @@ const SearchFeed = () => {
 			console.error("Error fetching recipes:", error);
 		}
 	};
+
 	const handleClick = (id: number) => {
 		router.push(`/recipedetail?query=${id}`);
 		setLoading(true);
 	};
+
 	useEffect(() => {
 		if (query && query !== searchTerm) {
 			setSearchTerm(query);
@@ -58,9 +59,9 @@ const SearchFeed = () => {
 	useEffect(() => {
 		const timer = setTimeout(() => {
 			if (searchTerm) {
-			setLoading(true);
-			getSearchFeed(searchTerm);
-		}
+				setLoading(true);
+				getSearchFeed(searchTerm);
+			}
 		}, 3000);
 		return () => clearTimeout(timer);
 	}, [searchTerm]);
@@ -84,9 +85,7 @@ const SearchFeed = () => {
 	if (!searchResult || searchResult.results.length === 0) {
 		return (
 			<Box sx={{ padding: 2 }}>
-				<Typography
-					sx={{ fontSize: 18, fontWeight: 600 }}
-				>
+				<Typography sx={{ fontSize: 18, fontWeight: 600 }}>
 					No recipes found for &quot;{searchTerm}&quot;.
 				</Typography>
 			</Box>
@@ -132,6 +131,14 @@ const SearchFeed = () => {
 				))}
 			</Grid>
 		</Box>
+	);
+};
+
+const SearchFeed = () => {
+	return (
+		<Suspense fallback={<FoodLottie />}>
+			<SearchFeedContent />
+		</Suspense>
 	);
 };
 
