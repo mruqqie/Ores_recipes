@@ -57,19 +57,22 @@ const SearchFeed = () => {
 		}
 	}, [query, searchTerm]);
 
-	// useEffect(() => {
-	// 	const timer = setTimeout(() => {
-	// 		getSearchFeed();
-	// 	}, 3000);
-	// 	return () => clearTimeout(timer);
-	// }, []);
-
 	useEffect(() => {
-		if (searchTerm) {
+		const timer = setTimeout(() => {
+			if (searchTerm) {
 			setLoading(true);
 			getSearchFeed(searchTerm);
 		}
+		}, 3000);
+		return () => clearTimeout(timer);
 	}, [searchTerm]);
+
+	// useEffect(() => {
+	// 	if (searchTerm) {
+	// 		setLoading(true);
+	// 		getSearchFeed(searchTerm);
+	// 	}
+	// }, [searchTerm]);
 
 	if (loading) {
 		return <FoodLottie />;
@@ -93,7 +96,7 @@ const SearchFeed = () => {
 				<Typography
 					sx={{ fontSize: 18, fontWeight: 600 }}
 				>
-					No recipes found for "{searchTerm}".
+					No recipes found for &quot;{searchTerm}&quot;.
 				</Typography>
 			</Box>
 		);
@@ -102,7 +105,7 @@ const SearchFeed = () => {
 	return (
 		<Box sx={{ padding: 2 }}>
 			<Typography variant="h6" sx={{ marginBottom: 2 }}>
-				Search Results for "{searchTerm}"
+				Search Results for &quot;{searchTerm}&quot;
 			</Typography>
 			<Grid container spacing={2} sx={{ padding: 1 }}>
 				{searchResult?.results.map((item) => (

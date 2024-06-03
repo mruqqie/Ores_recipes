@@ -287,8 +287,8 @@ const RecipeDetail = () => {
 									Ingredients
 								</Typography>
 								<Box>
-									{recipe?.extendedIngredients.map((item) => (
-										<Typography>{item.original}</Typography>
+									{recipe?.extendedIngredients.map((item, index) => (
+										<Typography key={index}>{item.original}</Typography>
 									))}
 								</Box>
 								<Typography sx={{ paddingY: 1 }} variant="h5">
